@@ -13,27 +13,25 @@ namespace iter {
     TakeWhile<FilterFunc, Container> takewhile(FilterFunc, Container &);
 
     template <typename FilterFunc, typename Container>
-    class TakeWhile {
+    class TakeWhile : public Filter<FilterFunc, Container> {
         friend TakeWhile takewhile<FilterFunc, Container>(
                 FilterFunc, Container &);
 
         // Type of the Container::Iterator, but since the name of that 
         // iterator can be anything, we have to grab it with this
+#if 0
         using contained_iter_type =
             decltype(((Container *)nullptr)->begin());
 
         // The type returned when dereferencing the Container::Iterator
         using contained_iter_ret =
             decltype(((contained_iter_type *)nullptr)->operator*());
+#endif
 
         private:
-            Container & container;
-            FilterFunc filter_func;
-            
             // Value constructor for use only in the takewhile function
             TakeWhile(FilterFunc filter_func, Container & container) :
-                container(container),
-                filter_func(filter_func)
+                Filter<FilterFunc, Container>(filter_func, container)
             { }
             TakeWhile () = delete;
             TakeWhile & operator=(const TakeWhile &) = delete;

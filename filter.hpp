@@ -16,16 +16,16 @@ namespace iter {
         // The filter function is the only thing allowed to create a Filter
         friend Filter filter<FilterFunc, Container>(FilterFunc, Container &);
 
-        // Type of the Container::Iterator, but since the name of that 
-        // iterator can be anything, we have to grab it with this
-        using contained_iter_type =
-            decltype(((Container *)nullptr)->begin());
+        protected:
+            // Type of the Container::Iterator, but since the name of that 
+            // iterator can be anything, we have to grab it with this
+            using contained_iter_type =
+                decltype(((Container *)nullptr)->begin());
 
-        // The type returned when dereferencing the Container::Iterator
-        using contained_iter_ret =
-            decltype(((contained_iter_type *)nullptr)->operator*());
+            // The type returned when dereferencing the Container::Iterator
+            using contained_iter_ret =
+                decltype(((contained_iter_type *)nullptr)->operator*());
 
-        private:
             Container & container;
             FilterFunc filter_func;
             
